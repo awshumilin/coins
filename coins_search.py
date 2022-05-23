@@ -6,7 +6,7 @@ import time
 
 
 def save_photo_to_file(url, filename):
-    file = filename + ".jpg"
+    file = "coins_pics\\" + filename + ".jpg"
     with open(file, 'wb') as out:
         out.write(requests.get(url).content)
 
@@ -16,7 +16,7 @@ pr = []
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 counter = 1
 
-word_to_find = "Egypt"
+word_to_find = "Ardashir"
 
 for i in range(1,5):
     link = f"https://www.vcoins.com/en/coins/ancient-2.aspx?page={i}"
