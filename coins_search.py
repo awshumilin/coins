@@ -19,7 +19,7 @@ pr = []
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 counter = 1
 
-word_to_find = "Drachm"
+word_to_find = input("Word you want to find...")
 
 for i in range(1,5):
     link = f"https://www.vcoins.com/en/coins/ancient-2.aspx?page={i}"
@@ -33,11 +33,11 @@ for i in range(1,5):
 
         # Photo saving
         pic_link = "https://www.vcoins.com" + item.findParent("div", "item-info").find("a")["href"]
-        print(pic_link)
+        # print(pic_link)
         page_pic = requests.get(pic_link)
         soup_pic = BeautifulSoup(page_pic.text, "lxml")
         pic = soup_pic.find("img", title=re.compile(word_to_find))["src"]
-        print(pic)
+        # print(pic)
         save_photo_to_file(pic, word_to_find, f"coin{counter}")
         counter += 1
 
