@@ -3,10 +3,13 @@ import re
 from bs4 import BeautifulSoup
 import locale
 import time
+import os
 
 
-def save_photo_to_file(url, filename):
-    file = "coins_pics\\" + filename + ".jpg"
+def save_photo_to_file(url, folder, filename):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    file = folder + "\\" + filename + ".jpg"
     with open(file, 'wb') as out:
         out.write(requests.get(url).content)
 
@@ -16,7 +19,7 @@ pr = []
 locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 counter = 1
 
-word_to_find = "Ardashir"
+word_to_find = "Drachm"
 
 for i in range(1,5):
     link = f"https://www.vcoins.com/en/coins/ancient-2.aspx?page={i}"
@@ -35,7 +38,7 @@ for i in range(1,5):
         soup_pic = BeautifulSoup(page_pic.text, "lxml")
         pic = soup_pic.find("img", title=re.compile(word_to_find))["src"]
         print(pic)
-        save_photo_to_file(pic, f"coin{counter}")
+        save_photo_to_file(pic, word_to_find, f"coin{counter}")
         counter += 1
 
         print(prices[0]["content"], prices[1]["content"])
