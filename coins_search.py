@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup
 import locale
 import time
 import os
+from search_res import SearchResult
 
 
 def save_photo_to_file(url, folder, filename):
@@ -20,6 +21,8 @@ locale.setlocale( locale.LC_ALL, 'en_US.UTF-8' )
 counter = 1
 
 word_to_find = input("Word you want to find...")
+
+search_result = SearchResult()
 
 for i in range(1,5):
     link = f"https://www.vcoins.com/en/coins/ancient-2.aspx?page={i}"
@@ -44,14 +47,20 @@ for i in range(1,5):
         print(prices[0]["content"], prices[1]["content"])
         pr.append(locale.atof(prices[1]["content"]))
 
-print(pr)
-try:
-    print(f"total amount = {len(pr)}")
-    print(f"average price = {sum(pr) / len(pr)}")
-    print(f"max price = {max(pr)}")
-    print(f"min price = {min(pr)}")
-except(ZeroDivisionError):
-    print("Nothing")
+        search_result.search_list.append({'legend':item.text, 'price':locale.atof(prices[1]["content"]), 'currency':prices[0]["content"]})
+
+# print(pr)
+print(search_result.search_list)
+print(search_result.min_price())
+print(search_result.max_price())
+print(search_result.average_price())
+# try:
+#     print(f"total amount = {len(pr)}")
+#     print(f"average price = {sum(pr) / len(pr)}")
+#     print(f"max price = {max(pr)}")
+#     print(f"min price = {min(pr)}")
+# except(ZeroDivisionError):
+#     print("Nothing")
 
 
 
