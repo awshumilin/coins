@@ -1,5 +1,7 @@
 class SearchResult:
-    search_list = []
+
+    def __init__(self):
+        self.search_list = []
 
     def min_price(self):
         min = 100000000
