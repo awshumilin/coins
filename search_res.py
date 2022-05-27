@@ -8,20 +8,31 @@ class SearchResult:
         for item in self.search_list:
             if item['price']<min:
                 min = item['price']
-        return min
+
+        if min == 100000000:
+            return "Nothing found!"
+        else:
+            return min
 
     def max_price(self):
         max = 0
         for item in self.search_list:
             if item['price'] > max:
                 max = item['price']
-        return max
+
+        if max == 0:
+            return "Nothing found!"
+        else:
+            return max
 
     def average_price(self):
         sum = 0
         for item in self.search_list:
             sum += item['price']
-        return sum/len(self.search_list)
+        if len(self.search_list) !=0:
+            return sum/len(self.search_list)
+        else:
+            return "Nothing found!"
 
 
 
