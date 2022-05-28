@@ -1,23 +1,34 @@
 
 from search_res import SearchResult
-from search_functions import make_search_result
+from search_functions import *
 
 words_to_find = input("Words you want to find...").split()
 
-search_results = []
+save_images = True
 
-for j in range(len(words_to_find)):
-    print(words_to_find[j])
-    search_results.append(make_search_result(words_to_find[j], 5))
+search_result = make_search_result(words_to_find[0], 5)
 
-for j in range(len(words_to_find)):
-    print('---------------------------')
-    print(f'search word no {j+1} - {words_to_find[j]}')
-    print(f'Total results: {len(search_results[j].search_list)}')
-    #print(search_results[j].search_list)
-    print(f'Minimal price: {search_results[j].min_price()}')
-    print(f'Maximum price: {search_results[j].max_price()}')
-    print(f'Average price: {search_results[j].average_price()}')
+if len(words_to_find) > 1:
+    for i in range(1, len(words_to_find)):
+        search_result = filter_search_result(search_result, words_to_find[i])
+
+if save_images:
+    counter = 0
+    for item in search_result.search_list:
+        counter += 1
+        save_photo_to_file(item['pic_link'], words_to_find[0], f"coin{counter}")
+
+save_result_to_file(search_result, words_to_find[0], words_to_find[0])
+
+print(f'Total results after filter {len(search_result.search_list)}')
+
+print('---------------------------')
+print(f'Total results: {len(search_result.search_list)}')
+#print(search_result.search_list)
+print(f'Minimal price: {search_result.min_price()}')
+print(f'Maximum price: {search_result.max_price()}')
+print(f'Average price: {search_result.average_price()}')
+
 
 
 

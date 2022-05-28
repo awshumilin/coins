@@ -2,7 +2,6 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import locale
-import time
 import os
 from search_res import SearchResult
 
@@ -47,7 +46,7 @@ def vcoins_search(word_to_find, pages, search_result, counter):
 
     return search_result, counter
 
-def make_search_result(word_to_find, pages, uppercase = True, save_images = True):
+def make_search_result(word_to_find, pages, uppercase = True):
     search_result = SearchResult()
     locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
     counter = 1
@@ -57,15 +56,7 @@ def make_search_result(word_to_find, pages, uppercase = True, save_images = True
     if uppercase:
         search_result, counter = vcoins_search(word_to_find.upper(), pages, search_result, counter)
 
-    if save_images:
-        counter = 0
-        for item in search_result.search_list:
-            counter += 1
-            save_photo_to_file(item['pic_link'], word_to_find, f"coin{counter}")
-
     search_result = add_coin_info(search_result)
-
-    save_result_to_file(search_result, word_to_find, word_to_find)
 
     return search_result
 
@@ -143,5 +134,15 @@ def add_coin_info(search_result):
             item['century'] = '2 AD'
         if re.search('AD[- ]\d\d[- \.]', item['legend']) != None:
             item['century'] = '1 AD'
+
+    return search_result
+
+def filter_search_result(search_result, word_to_find):
+    temp_list = []
+    for item in search_result.search_list:
+        if re.search(word_to_find, item['legend']) != None:
+            temp_list.append(item)
+
+    search_result.search_list = temp_list
 
     return search_result
