@@ -18,7 +18,10 @@ def save_result_to_file(result, folder, filename):
     file = folder + "\\" + filename + ".txt"
     with open(file, 'w') as out:
         for item in result.search_list:
-            out.write(str(item))
+            try:
+                out.write(str(item))
+            except(UnicodeEncodeError) as e:
+                print(e)
             out.write('\n')
 
 def save_result_to_csv_file(result, folder, filename):
@@ -26,10 +29,16 @@ def save_result_to_csv_file(result, folder, filename):
         os.makedirs(folder)
     file = folder + "\\" + filename + ".csv"
     with open(file, 'w') as out:
+        out.write('legend'+','+'price'+','+'currency'+','+'coin_page'+','+'pic_link'+','+'century'+','+'material')
+        out.write('\n')
         for item in result.search_list:
-            out.write(str(item['legend'])+','+str(item['price'])+','+str(item['currency'])+
+            try:
+                out.write(str(item['legend']).replace(',',"")+
+                      ','+str(item['price'])+','+str(item['currency'])+
                       ','+str(item['coin_page'])+','+str(item['pic_link'])+','+
                       str(item['century'])+','+str(item['material']))
+            except(UnicodeEncodeError) as e:
+                print(e)
             out.write('\n')
 
 def vcoins_search(word_to_find, pages, search_result, counter):
@@ -90,61 +99,61 @@ def add_coin_info(search_result):
             item['material'] = 'Bronze'
 
         if re.search('6\d\d BC', item['legend']) != None:
-            item['century'] = '7 BC'
+            item['century'] = '-7'
         if re.search('5\d\d BC', item['legend']) != None:
-            item['century'] = '6 BC'
+            item['century'] = '-6'
         if re.search('4\d\d BC', item['legend']) != None:
-            item['century'] = '5 BC'
+            item['century'] = '-5'
         if re.search('3\d\d BC', item['legend']) != None:
-            item['century'] = '4 BC'
+            item['century'] = '-4'
         if re.search('2\d\d BC', item['legend']) != None:
-            item['century'] = '3 BC'
+            item['century'] = '-3'
         if re.search('1\d\d BC', item['legend']) != None:
-            item['century'] = '2 BC'
+            item['century'] = '-2'
         if re.search('[- ]\d\d BC', item['legend']) != None:
-            item['century'] = '1 BC'
+            item['century'] = '-1'
         if re.search('BC 6\d\d', item['legend']) != None:
-            item['century'] = '7 BC'
+            item['century'] = '-7'
         if re.search('BC 5\d\d', item['legend']) != None:
-            item['century'] = '6 BC'
+            item['century'] = '-6'
         if re.search('BC 4\d\d', item['legend']) != None:
-            item['century'] = '5 BC'
+            item['century'] = '-5'
         if re.search('BC 3\d\d', item['legend']) != None:
-            item['century'] = '4 BC'
+            item['century'] = '-4'
         if re.search('BC 2\d\d', item['legend']) != None:
-            item['century'] = '3 BC'
+            item['century'] = '-3'
         if re.search('BC 1\d\d', item['legend']) != None:
-            item['century'] = '2 BC'
+            item['century'] = '-2'
         if re.search('BC[- ]\d\d[- \.]', item['legend']) != None:
-            item['century'] = '1 BC'
+            item['century'] = '-1'
         if re.search('6\d\d AD', item['legend']) != None:
-            item['century'] = '7 AD'
+            item['century'] = '7'
         if re.search('5\d\d AD', item['legend']) != None:
-            item['century'] = '6 AD'
+            item['century'] = '6'
         if re.search('4\d\d AD', item['legend']) != None:
-            item['century'] = '5 AD'
+            item['century'] = '5'
         if re.search('3\d\d AD', item['legend']) != None:
-            item['century'] = '4 AD'
+            item['century'] = '4'
         if re.search('2\d\d AD', item['legend']) != None:
-            item['century'] = '3 AD'
+            item['century'] = '3'
         if re.search('1\d\d AD', item['legend']) != None:
-            item['century'] = '2 AD'
+            item['century'] = '2'
         if re.search('[- ]\d\d AD', item['legend']) != None:
-            item['century'] = '1 AD'
+            item['century'] = '1'
         if re.search('AD 6\d\d', item['legend']) != None:
-            item['century'] = '7 AD'
+            item['century'] = '7'
         if re.search('AD 5\d\d', item['legend']) != None:
-            item['century'] = '6 AD'
+            item['century'] = '6'
         if re.search('AD 4\d\d', item['legend']) != None:
-            item['century'] = '5 AD'
+            item['century'] = '5'
         if re.search('AD 3\d\d', item['legend']) != None:
-            item['century'] = '4 AD'
+            item['century'] = '4'
         if re.search('AD 2\d\d', item['legend']) != None:
-            item['century'] = '3 AD'
+            item['century'] = '3'
         if re.search('AD 1\d\d', item['legend']) != None:
-            item['century'] = '2 AD'
+            item['century'] = '2'
         if re.search('AD[- ]\d\d[- \.]', item['legend']) != None:
-            item['century'] = '1 AD'
+            item['century'] = '1'
 
     return search_result
 
