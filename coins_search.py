@@ -19,6 +19,7 @@ if save_images:
         save_photo_to_file(item['pic_link'], words_to_find[0], f"coin{counter}")
 
 save_result_to_file(search_result, words_to_find[0], words_to_find[0])
+save_result_to_csv_file(search_result, words_to_find[0], words_to_find[0])
 
 print(f'Total results after filter {len(search_result.search_list)}')
 

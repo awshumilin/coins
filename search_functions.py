@@ -21,6 +21,17 @@ def save_result_to_file(result, folder, filename):
             out.write(str(item))
             out.write('\n')
 
+def save_result_to_csv_file(result, folder, filename):
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+    file = folder + "\\" + filename + ".csv"
+    with open(file, 'w') as out:
+        for item in result.search_list:
+            out.write(str(item['legend'])+','+str(item['price'])+','+str(item['currency'])+
+                      ','+str(item['coin_page'])+','+str(item['pic_link'])+','+
+                      str(item['century'])+','+str(item['material']))
+            out.write('\n')
+
 def vcoins_search(word_to_find, pages, search_result, counter):
     for i in range(1, pages + 1):
         link = f"https://www.vcoins.com/en/coins/ancient-2.aspx?page={i}"
